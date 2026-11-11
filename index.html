@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Crivz · Banda de pop, MPB e rock em BH</title>
+<meta name="description" content="Crivz, banda de pop, MPB e rock de Belo Horizonte. Show ao vivo para bares, pubs e eventos. Chame no WhatsApp e leve a Crivz pro seu palco.">
+<meta name="theme-color" content="#e8c39e">
+<!-- prévia de link (WhatsApp/Instagram): URL absoluta; trocar quando o domínio próprio existir -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Crivz · Banda de pop, MPB e rock em BH">
+<meta property="og:description" content="Show ao vivo para bares, pubs e eventos. Leve a Crivz pro seu palco.">
+<meta property="og:image" content="https://vitorgabriel0205-design.github.io/crivz/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:url" content="https://vitorgabriel0205-design.github.io/crivz/">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ow:#e8c39e; --red:#9d2b32; --pk:#1f1e1c; --rx:#3a2a3e;
+  --pad:6.4vw;
+}
+*{box-sizing:border-box}
+html{background:var(--ow)}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{margin:0;background:var(--ow);color:var(--pk);font-family:Montserrat,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+body.locked{overflow:hidden;height:100vh}
+img,video,svg{display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* grão de filme: ladrilho pronto, sem modo de mistura (o multiply obrigava a repintar a tela inteira) */
+#grain{position:fixed;inset:0;z-index:50;pointer-events:none;background:url(assets/grao.png);opacity:.55;transform:translateZ(0)}
+
+/* abertura em vídeo, por cima de tudo */
+#abertura{position:fixed;inset:0;z-index:40;background:var(--ow)}
+#abertura video{width:100%;height:100%;object-fit:cover}
+
+/* tipografia */
+.it{font-style:italic;font-weight:800;letter-spacing:-.01em;line-height:1.02}
+.ln{display:block;overflow:hidden;padding:.08em .14em .12em;margin:-.08em -.14em -.12em}
+.ln>span{display:block;will-change:transform}
+.rot{font-weight:600;font-size:2.9vw;letter-spacing:.28em;text-transform:uppercase}
+.corpo{font-weight:500;font-size:4.5vw;line-height:1.5}
+.red{color:var(--red)}
+.tit{font-size:15vw;margin:0 0 9vw}
+.lt-m{padding-bottom:.06em;margin-bottom:-.06em}
+
+/* 1 · hero */
+#hero{height:230vh;position:relative}
+#hero .st{position:sticky;top:0;height:100vh;height:100lvh;overflow:hidden}
+#c{width:100%;height:100%}
+#cta{position:absolute;left:0;top:0;overflow:visible;pointer-events:none;will-change:transform}
+#hero .fb{display:none;position:absolute;inset:0}
+#hero.semgl #c,#hero.semgl #cta{display:none}
+#hero.semgl .fb{display:block}
+#hero .fb .logo{position:absolute;left:50%;top:40%;width:min(86vw,50vw + 20vh);aspect-ratio:3.6;transform:translate(-50%,-50%);background:var(--red);
+  -webkit-mask:url(assets/logo-mascara.png) center/contain no-repeat;mask:url(assets/logo-mascara.png) center/contain no-repeat}
+#hero .fb svg{position:absolute;left:0;bottom:0;width:100%;height:32%}
+
+/* 2 · a banda */
+#banda{padding:22vw var(--pad) 0;display:flex;flex-direction:column}
+#banda .txt{display:contents}
+#banda h2{font-size:8.6vw;margin:0;order:1}
+#foto-banda{order:2;margin:16vw calc(-1*var(--pad)) 0;width:100vw;height:128vw}
+#banda .corpo{order:3;margin:12vw 0 0;max-width:86vw}
+
+/* 3 · o show */
+#show{padding:30vw var(--pad) 8vw}
+.fato{position:relative;padding:5.6vw 0 6.2vw}
+.fato .fio{position:absolute;left:0;top:0;width:100%;height:2px;overflow:visible}
+.fato .rot{color:var(--red);margin-bottom:2.6vw}
+.fato .v{font-size:7.2vw}
+
+/* 4 · repertório */
+#repertorio{padding:24vw 0 30vw;overflow:hidden}
+#repertorio .tit{padding:0 var(--pad)}
+#repertorio .corpo{padding:0 var(--pad);margin:-3vw 0 12vw;max-width:90vw}
+.fila{white-space:nowrap;font-size:12.6vw;padding:.127em 0}
+.fila span{display:inline-flex;align-items:center}
+.fila .tr{display:inline-flex;flex-wrap:nowrap;will-change:transform}
+.fila .tr > *{flex:none}
+.fila .m{width:.714em;height:.476em;margin:0 .333em;flex:none}
+/* vazada: contorno feito por sombra em volta da letra preenchida com o fundo.
+   O -webkit-text-stroke mostrava as emendas internas da fonte variável ("rabiscos") */
+.fila.vazada{color:var(--ow);text-shadow:
+  .02em 0 0 var(--pk),-.02em 0 0 var(--pk),0 .02em 0 var(--pk),0 -.02em 0 var(--pk),
+  .0141em .0141em 0 var(--pk),-.0141em .0141em 0 var(--pk),.0141em -.0141em 0 var(--pk),-.0141em -.0141em 0 var(--pk),
+  .0185em .0077em 0 var(--pk),-.0185em .0077em 0 var(--pk),.0185em -.0077em 0 var(--pk),-.0185em -.0077em 0 var(--pk),
+  .0077em .0185em 0 var(--pk),-.0077em .0185em 0 var(--pk),.0077em -.0185em 0 var(--pk),-.0077em -.0185em 0 var(--pk)}
+.fila .aut{font-style:normal;font-weight:600;font-size:.206em;letter-spacing:.24em;text-shadow:none;color:var(--ow);background:var(--red);padding:.38em .7em;margin-left:.92em;align-self:center;transform:translateY(-.23em)}
+
+/* faixas de passagem: desenhadas uma vez, movidas por transform (sem redesenhar) */
+.passa{position:relative;height:55.5vw;overflow:hidden;margin-top:-1px;margin-bottom:-1px}
+.passa svg{position:absolute;left:-15%;top:0;width:130%;height:150%;will-change:transform}
+
+/* 5 · ao vivo */
+#aovivo{background:var(--pk);height:100vh;height:100lvh;position:relative;overflow:hidden;color:var(--ow)}
+#aovivo .ondas{position:absolute;left:-30%;top:50%;width:160%;height:96vw;will-change:transform}
+#aovivo .tit{position:absolute;left:var(--pad);top:7vh;margin:0;color:var(--ow);z-index:2}
+#janela{position:absolute;left:50%;top:54%;width:58vw;height:103vw;transform:translate(-50%,-50%);overflow:hidden;z-index:1;background:var(--pk)}
+#janela video{width:100%;height:100%;object-fit:cover}
+#som{position:absolute;right:12px;bottom:12px;z-index:3;display:flex;align-items:center;gap:8px;border:0;cursor:pointer;
+  background:rgba(31,30,28,.62);color:var(--ow);padding:9px 13px 9px 11px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  font-weight:600;font-size:10px;letter-spacing:.24em;text-transform:uppercase}
+#som svg{width:18px;height:18px}
+#som .on{display:none}
+#som[aria-pressed="true"]{background:var(--red)}
+#som[aria-pressed="true"] .on{display:block}
+#som[aria-pressed="true"] .off{display:none}
+#aovivo .leg{position:absolute;left:0;right:0;bottom:6vh;text-align:center;color:var(--ow);z-index:2}
+
+/* 6 · autoral */
+#autoral{background:var(--pk);color:var(--ow);padding:26vw var(--pad) 22vw;position:relative;overflow:hidden;display:flex;flex-direction:column}
+#autoral .txt{display:contents}
+#autoral .tit{font-size:13vw;margin-bottom:6vw;order:1}
+#disco{order:2;position:relative;width:100vw;aspect-ratio:540/330;margin:6vw calc(-1*var(--pad)) 0}
+#disco > *{position:absolute;will-change:transform}
+#disco .vinil{left:calc((34 + 135 - 132)/540*100%);top:calc((30 + 135 - 132)/330*100%);width:calc(264/540*100%);aspect-ratio:1}
+#disco .sulcos{position:absolute;inset:0;width:100%;height:100%}
+#disco .selo{position:absolute;left:calc((132 - 57)/264*100%);top:calc((132 - 57)/264*100%);width:calc(114/264*100%);aspect-ratio:1;will-change:transform}
+#disco .capa{left:calc(26/540*100%);top:calc(22/330*100%);width:calc(292/540*100%);aspect-ratio:1;overflow:visible}
+#autoral .corpo{order:3;max-width:84vw;margin:4vw 0 0}
+#ano{order:4;font-size:31vw;color:var(--red);margin:10vw 0 0;display:flex;font-weight:900}
+#ano .ln{margin-right:-.16em}
+
+/* 7 · contrate + rodapé */
+#contrate{position:relative;padding:30vw var(--pad) 0;overflow:hidden}
+#contrate .tit{font-size:12.4vw}
+#btn{display:inline-flex;align-items:center;gap:.68em;background:var(--red);color:var(--ow);text-decoration:none;font-weight:700;font-style:italic;font-size:5vw;padding:1em 1.4em;margin-top:4vw;position:relative;overflow:hidden}
+#btn svg{width:1.2em;height:1.2em;flex:none}
+#btn .brilho{position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(232,195,158,.28) 50%,transparent 70%);transform:translateX(-120%);will-change:transform}
+#contrate .tel{margin-top:6vw;font-weight:600;font-size:4.4vw}
+#contrate .tel a{text-decoration:none}
+#mare{position:relative;display:block;width:100vw;height:61vw;margin:22vw calc(-1*var(--pad)) 0;overflow:hidden}
+#mare svg{position:absolute;left:-15%;top:0;width:130%;height:160%;will-change:transform}
+footer{background:var(--pk);color:var(--ow);padding:4vw var(--pad) calc(12vw + 64px);margin:-1px calc(-1*var(--pad)) 0;text-align:center}
+footer .logo{width:34vw;height:12vw;margin:0 auto 7vw;background:var(--ow);-webkit-mask:url(assets/logo-mascara.png) center/contain no-repeat;mask:url(assets/logo-mascara.png) center/contain no-repeat}
+footer .rot{font-size:2.7vw}
+footer .ig{display:inline-block;margin-top:3.2vw;font-weight:500;font-size:3.8vw;opacity:.85;text-decoration:none}
+
+/* barra fixa de contratar */
+#barra{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:space-between;align-items:center;
+  padding:3.6vw var(--pad) calc(3.6vw + env(safe-area-inset-bottom));background:var(--red);color:var(--ow);text-decoration:none;transform:translateY(110%);will-change:transform}
+#barra .a{font-weight:700;font-style:italic;font-size:4.4vw}
+#barra .rot{font-size:2.5vw}
+
+/* ===================== computador ===================== */
+@media (min-width:900px){
+  :root{--pad:max(5.5vw,(100vw - 1320px)/2)}
+  .rot{font-size:12px}
+  .corpo{font-size:clamp(17px,1.35vw,22px)}
+  .tit{font-size:clamp(64px,7.6vw,136px);margin:0 0 56px}
+
+  #banda{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.86fr);column-gap:6vw;align-items:center;padding:12vw var(--pad) 4vw}
+  #banda .txt{display:block}
+  #banda h2{font-size:clamp(46px,4.6vw,84px)}
+  #banda .corpo{margin:48px 0 0;max-width:30em}
+  #foto-banda{margin:0;width:100%;height:auto;aspect-ratio:540/691}
+
+  #show{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);column-gap:5vw;padding:12vw var(--pad) 4vw;align-items:start}
+  #show .fatos{display:grid;grid-template-columns:1fr 1fr;column-gap:4vw}
+  .fato{padding:28px 0 40px}
+  .fato .rot{margin-bottom:16px}
+  .fato .v{font-size:clamp(24px,2.3vw,40px)}
+
+  #repertorio{padding:12vw 0 14vw}
+  #repertorio .corpo{margin:-24px 0 64px;max-width:36em}
+  .fila{font-size:clamp(56px,7.2vw,132px)}
+
+  .passa{height:17vw}
+
+  #aovivo .ondas{height:72vh}
+  #aovivo .tit{top:50%;margin-top:-.6em;font-size:clamp(56px,5.6vw,108px)}
+  #janela{width:calc(72vh*9/16);height:72vh;top:50%}
+  #aovivo .leg{bottom:5vh}
+  #som{right:16px;bottom:16px}
+
+  #autoral{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);column-gap:4vw;align-items:center;padding:12vw var(--pad) 10vw}
+  #autoral .txt{display:block}
+  #autoral .tit{font-size:clamp(60px,6.6vw,124px);margin-bottom:40px}
+  #autoral .corpo{max-width:26em}
+  #ano{font-size:clamp(110px,13vw,236px);margin:32px 0 0}
+  #disco{width:100%;margin:0}
+
+  #contrate{padding:12vw var(--pad) 0;text-align:center}
+  #contrate .tit{font-size:clamp(60px,7.4vw,136px)}
+  #contrate .tit .ln{margin-left:auto;margin-right:auto}
+  #btn{font-size:clamp(18px,1.6vw,26px);margin-top:24px}
+  #contrate .tel{margin-top:28px;font-size:16px}
+  #mare{width:100vw;height:24vw;margin-top:9vw}
+  footer{padding:24px var(--pad) 72px}
+  footer .logo{width:220px;height:76px;margin-bottom:40px}
+  footer .rot{font-size:12px}
+  footer .ig{margin-top:14px;font-size:16px}
+
+  #barra{left:auto;right:28px;bottom:28px;padding:16px 22px;gap:22px;transform:translateY(160%)}
+  #barra .a{font-size:17px}
+  #barra .rot{font-size:11px}
+}
+@media (hover:hover){
+  #btn,#barra,#som{transition:filter .25s}
+  #btn:hover,#barra:hover,#som:hover{filter:brightness(1.12)}
+}
+</style>
+</head>
+<body class="locked">
+
+<div id="abertura"><video muted playsinline preload="auto" aria-hidden="true"></video></div>
+<div id="grain"></div>
+
+<main>
+  <!-- 1 · primeira dobra: Horizonte com cascata -->
+  <section id="hero">
+    <h1 class="sr">Crivz, banda de pop, MPB e rock de Belo Horizonte</h1>
+    <div class="st">
+      <canvas id="c" aria-hidden="true"></canvas><svg id="cta" viewBox="-32 -8 64 74" aria-hidden="true"></svg>
+      <div class="fb" aria-hidden="true"><div class="logo"></div><svg viewBox="0 0 540 180" preserveAspectRatio="none"></svg></div>
+    </div>
+  </section>
+
+  <!-- 2 · a banda -->
+  <section id="banda">
+    <div class="txt">
+      <h2 class="it" data-linhas>
+        <span class="ln"><span>Pop, MPB e rock</span></span>
+        <span class="ln"><span>tocados ao vivo,</span></span>
+        <span class="ln"><span>com groove</span></span>
+        <span class="ln"><span class="red">e calor.</span></span>
+      </h2>
+      <p class="corpo" data-texto>A Crivz nasceu no palco dos bares e pubs da cidade e é lá que ela fica à vontade: repertório que todo mundo conhece, tocado do jeito da banda.</p>
+    </div>
+    <svg id="foto-banda" viewBox="0 0 540 691" preserveAspectRatio="none" role="img" aria-label="Caíque e João, da Crivz"></svg>
+  </section>
+
+  <!-- 3 · o show -->
+  <section id="show">
+    <h2 class="it tit red" data-linhas><span class="ln"><span>O show</span></span></h2>
+    <div class="fatos">
+      <div class="fato"><svg class="fio" viewBox="0 0 100 2" preserveAspectRatio="none"><line x1="0" y1="1" x2="100" y2="1" stroke="#1f1e1c" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>
+        <div class="rot">Formato</div><div class="it v"><span class="ln"><span>Banda completa ao vivo</span></span></div></div>
+      <div class="fato"><svg class="fio" viewBox="0 0 100 2" preserveAspectRatio="none"><line x1="0" y1="1" x2="100" y2="1" stroke="#1f1e1c" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>
+        <div class="rot">Duração</div><div class="it v"><span class="ln"><span>Sets sob medida</span></span><span class="ln"><span>para a sua noite</span></span></div></div>
+      <div class="fato"><svg class="fio" viewBox="0 0 100 2" preserveAspectRatio="none"><line x1="0" y1="1" x2="100" y2="1" stroke="#1f1e1c" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>
+        <div class="rot">Repertório</div><div class="it v"><span class="ln"><span>Pop, MPB e rock,</span></span><span class="ln"><span>nacional e internacional</span></span></div></div>
+      <div class="fato"><svg class="fio" viewBox="0 0 100 2" preserveAspectRatio="none"><line x1="0" y1="1" x2="100" y2="1" stroke="#1f1e1c" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>
+        <div class="rot">Estrutura</div><div class="it v"><span class="ln"><span>A combinar com a casa</span></span></div></div>
+    </div>
+  </section>
+
+  <!-- 4 · repertório -->
+  <section id="repertorio">
+    <h2 class="it tit" data-linhas><span class="ln"><span>No repertório</span></span></h2>
+    <p class="corpo" data-texto>Os clássicos que a casa inteira canta junto, e música nossa no meio.</p>
+    <div class="fila red it" data-dir="-1" data-musicas="Velha Infância|Anna Júlia|Garota Nacional|Do Seu Lado"></div>
+    <div class="fila vazada it" data-dir="1" data-musicas="Tempo Perdido|Ainda Bem|Vou Dizer*|Lanterna dos Afogados"></div>
+    <div class="fila it" data-dir="-1" data-musicas="Sutilmente|Primeiros Erros|Mulher de Fases|Fácil"></div>
+    <div class="fila vazada it" data-dir="1" data-musicas="Wonderwall|Pais e Filhos|Exagerado|O Sol"></div>
+  </section>
+
+  <div class="passa" id="passa1" data-de="#e8c39e" data-para="#1f1e1c" aria-hidden="true"><svg preserveAspectRatio="none"></svg></div>
+
+  <!-- 5 · ao vivo -->
+  <section id="aovivo">
+    <svg class="ondas" viewBox="0 0 540 518" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <h2 class="it tit">Ao vivo</h2>
+    <div id="janela">
+      <video src="video/aovivo.mp4" poster="img/aovivo-poster.jpg" muted playsinline loop preload="metadata" aria-label="Crivz ao vivo no terraço do Rio California"></video>
+      <button id="som" type="button" aria-pressed="false" aria-label="Ligar o som do vídeo">
+        <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="m22 9-6 6M16 9l6 6"/></svg>
+        <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+        <span class="t">Som</span>
+      </button>
+    </div>
+    <div class="leg rot">Terraço do Rio California · BH</div>
+  </section>
+
+  <!-- 6 · autoral -->
+  <section id="autoral">
+    <div class="txt">
+      <h2 class="it tit" data-linhas><span class="ln"><span>Agora,</span></span><span class="ln"><span class="red">o autoral.</span></span></h2>
+      <p class="corpo" data-texto>Depois de muito palco com a música dos outros, a Crivz entra em estúdio com a dela. O primeiro disco chega em</p>
+      <div id="ano" class="it" aria-label="2027"><span class="ln"><span>2</span></span><span class="ln"><span>0</span></span><span class="ln"><span>2</span></span><span class="ln"><span>7</span></span></div>
+    </div>
+    <div id="disco" aria-hidden="true">
+      <div class="vinil"><svg class="sulcos" viewBox="-132 -132 264 264"></svg><svg class="selo" viewBox="-57 -57 114 114"></svg></div>
+      <svg class="capa" viewBox="-8 -8 292 292"></svg>
+    </div>
+  </section>
+
+  <div class="passa" id="passa2" data-de="#1f1e1c" data-para="#e8c39e" aria-hidden="true"><svg preserveAspectRatio="none"></svg></div>
+
+  <!-- 7 · contrate -->
+  <section id="contrate">
+    <h2 class="it tit" data-linhas><span class="ln"><span>Leve a Crivz</span></span><span class="ln"><span class="red">pro seu palco.</span></span></h2>
+    <a id="btn" href="https://wa.me/5531995611406?text=Oi!%20Vi%20o%20site%20da%20Crivz%20e%20quero%20saber%20sobre%20show." target="_blank" rel="noopener">
+      <span class="brilho"></span>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+      <span>Chamar no WhatsApp</span>
+    </a>
+    <div class="tel" data-sobe><a href="https://wa.me/5531995611406" target="_blank" rel="noopener">(31) 99561-1406</a></div>
+    <div id="mare" aria-hidden="true"><svg preserveAspectRatio="none"></svg></div>
+    <footer>
+      <div class="logo" role="img" aria-label="Crivz"></div>
+      <div class="rot">Banda Crivz · Belo Horizonte</div>
+      <a class="ig" href="https://instagram.com/bandacrivz" target="_blank" rel="noopener">@bandacrivz</a>
+    </footer>
+  </section>
+</main>
+
+<a id="barra" href="https://wa.me/5531995611406?text=Oi!%20Vi%20o%20site%20da%20Crivz%20e%20quero%20saber%20sobre%20show." target="_blank" rel="noopener"><span class="a">Contratar show</span><span class="rot">WhatsApp</span></a>
+
+<script src="lib/gsap.min.js"></script>
+<script src="lib/ScrollTrigger.min.js"></script>
+<script src="lib/DrawSVGPlugin.min.js"></script>
+<script src="lib/SplitText.min.js"></script>
+<script src="lib/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, SplitText);
+ScrollTrigger.config({ ignoreMobileResize: true });
+const OW = '#e8c39e', RED = '#9d2b32', PK = '#1f1e1c', RX = '#3a2a3e';
+const NS = 'http://www.w3.org/2000/svg';
+const clamp = (x,a=0,b=1) => Math.min(b, Math.max(a, x));
+const lin = (t,a,b) => clamp((t-a)/(b-a));
+const eExpo = x => x >= 1 ? 1 : 1 - Math.pow(2, -10*x);
+const eInOut = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x+2, 3)/2;
+const eOut = x => 1 - Math.pow(1 - x, 3);
+const now = () => performance.now()/1000;
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for(const k in attrs) e.setAttribute(k, attrs[k]); if(parent) parent.appendChild(e); return e; };
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const desk = () => innerWidth >= 900;
+// visibilidade por ScrollTrigger (sem medir a página a cada quadro)
+const visivel = (trigger, margem = 0) => { const f = { on: false };
+  ScrollTrigger.create({ trigger, start: `top bottom+=${margem}`, end: `bottom top-=${margem}`, onToggle: s => f.on = s.isActive }); return f; };
+
+/* ---------- ondas da marca em SVG: largas, coladas, frestas estreitas ---------- */
+const borda = (x, W, amp, ph, tilt=0) => amp*Math.sin(x/W*5.2 + ph) + amp*.45*Math.sin(x/W*11.3 - ph*.7 + 1.1) + tilt*(x/W - .5);
+function pathFaixa(W, y0, y1, amp, ph, tilt, n=48, ref=W){
+  let d = '';
+  for(let i = 0; i <= n; i++){ const x = W*i/n; d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + (y0 + borda(x, ref, amp, ph, tilt*ref/W)).toFixed(1); }
+  for(let i = n; i >= 0; i--){ const x = W*i/n; d += 'L' + x.toFixed(1) + ',' + (y1 + borda(x, ref, amp, ph, tilt*ref/W)).toFixed(1); }
+  return d + 'Z';
+}
+const PADRAO = [[RED,.060],[RX,.034],[RED,.052],[PK,.022],[RX,.046],[RED,.030],[PK,.058],[RX,.026],[RED,.040]];
+const GAP = .011;
+// a largura do desenho acompanha a proporção real do SVG; redesenha só no redimensionamento
+const ajustes = [];
+function ajustavel(svg, H, desenha){
+  const o = { W: 540, ref: 540 };
+  const fit = () => { const r = svg.getBoundingClientRect(); o.W = r.height ? Math.max(200, Math.round(H*r.width/r.height)) : 540;
+    o.ref = Math.min(o.W, (o.W + 700)/2); svg.setAttribute('viewBox', `0 0 ${o.W} ${H}`); desenha(o); };
+  fit(); ajustes.push(fit); return o;
+}
+
+/* ---------- 1 · HERO (Horizonte + cascata) ---------- */
+const hero = document.getElementById('hero');
+const cv = document.getElementById('c');
+const gl = cv.getContext('webgl2', { antialias: false, powerPreference: 'high-performance' });
+let LOGO_ASP = 3.6, heroPronto = false, U = () => null, drawHero = () => {}, heroProg = 0, heroVis = true;
+const cta = document.getElementById('cta');
+cta.innerHTML = [RED, RX, PK].map((c, i) => `<g class="ch" transform="translate(0 ${i*20})"><path d="M -24,0 C -14,2 -6,8 0,15 C 6,8 14,2 24,0" stroke="${c}" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`).join('');
+const chevs = [...cta.querySelectorAll('.ch')];
+const PER = 4*60/138;
+let ctaS = 96;
+function resizeHero(){
+  if(!gl) return;
+  const d = Math.min(devicePixelRatio || 1, 1.5);            // 1,5x basta pra onda lisa e poupa a placa
+  cv.width = Math.round(innerWidth*d); cv.height = Math.round(innerHeight*d); gl.viewport(0, 0, cv.width, cv.height);
+  ctaS = innerWidth < innerHeight ? 96 : 78; cta.style.width = ctaS + 'px'; cta.style.height = ctaS*74/64 + 'px';
+}
+
+if(gl){
+  const FS = `#version 300 es
+precision highp float;
+uniform vec2 uRes; uniform float uT; uniform float uIn; uniform float uScroll;
+uniform sampler2D uLogo; uniform float uLogoAsp; uniform float uLogoW; uniform vec2 uLogoC;
+out vec4 o;
+const vec3 RED = vec3(157.,43.,50.)/255.; const vec3 OW = vec3(232.,195.,158.)/255.;
+const vec3 PK = vec3(31.,30.,28.)/255.;   const vec3 RX = vec3(58.,42.,62.)/255.;
+vec3 cor(int i){ return i == 0 ? RED : i == 1 ? RX : PK; }
+const int NB = 9;
+const float BW[9] = float[9](.060, .034, .052, .022, .046, .030, .058, .026, .040);
+const int   BC[9] = int[9](0, 1, 0, 2, 1, 0, 2, 1, 0);
+const float GAP = .011;
+vec4 faixas(float d, float e){
+  float acc = 0.; vec3 c = OW; float m = 0.;
+  for(int i = 0; i < NB; i++){
+    float a = acc, b = acc + BW[i];
+    float k = smoothstep(a - e, a + e, d) * (1. - smoothstep(b - e, b + e, d));
+    c = mix(c, cor(BC[i]), k); m = max(m, k); acc = b + GAP;
+  }
+  return vec4(c, m);
+}
+float logoA(vec2 px){
+  vec2 sz = vec2(uLogoW, uLogoW/uLogoAsp); vec2 l = (px - uLogoC)/sz + .5;
+  if(l.x<0.||l.y<0.||l.x>1.||l.y>1.) return 0.;
+  return texture(uLogo, l).a;
+}
+void main(){
+  vec2 px = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
+  float H = uRes.y; vec2 q = px / H; float W = uRes.x / H; float t = uT;
+  vec3 col = OW;
+  float base = mix(mix(1.1, .72, uIn), -.6, uScroll);
+  float top = base + .028*sin(q.x*3.1 - t*.35) + .014*sin(q.x*6.3 + t*.22 + 1.1) - .05*(q.x/W - .5);
+  col = mix(col, RED, logoA(px));
+  float d = q.y - top;
+  vec4 f = faixas(d, fwidth(d)*.9);
+  o = vec4(mix(col, f.rgb, f.a), 1.);
+}`;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+    if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
+  const prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, `#version 300 es
+in vec2 p; void main(){ gl_Position = vec4(p,0.,1.); }`)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  const ploc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(ploc); gl.vertexAttribPointer(ploc, 2, gl.FLOAT, false, 0, 0);
+  const L = {}; ['uRes','uT','uIn','uScroll','uLogo','uLogoAsp','uLogoW','uLogoC'].forEach(n => L[n] = gl.getUniformLocation(prog, n));
+  U = n => L[n];
+
+  drawHero = (t) => {
+    if(!heroPronto || !heroVis) return;            // fora da tela: não gasta placa
+    const W = cv.width, H = cv.height, mobile = W < H;
+    const ein = eExpo(lin(t, 0, .9));               // ondas já no primeiro segundo
+    // celular: começa nos 89% em que a abertura termina e assenta em 86%; computador: metade da largura
+    const lw = mobile ? W*(.892 - .032*ein) : Math.min(W*.5, H*1.15);
+    const scroll = eInOut(heroProg);
+    const cy = H*(.5 - (mobile ? .08 : .13)*ein - .7*scroll);
+    gl.uniform2f(L.uRes, W, H); gl.uniform1f(L.uT, t); gl.uniform1f(L.uIn, ein);
+    gl.uniform1f(L.uLogoAsp, LOGO_ASP); gl.uniform1f(L.uLogoW, lw); gl.uniform2f(L.uLogoC, W*.5, cy);
+    gl.uniform1f(L.uScroll, scroll);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    // cascata: três setas que acendem de cima pra baixo a cada 4 batidas (138 BPM); posição por transform
+    const k2 = innerWidth/W, Hc = innerHeight, s = ctaS;
+    const vis = lin(t, .8, 1.3) * (1 - Math.min(1, scroll*2));
+    const yTop = (cy + lw/LOGO_ASP*.5)*k2, yWave = Hc*.72;
+    cta.style.transform = `translate3d(${(innerWidth/2 - s/2).toFixed(1)}px,${(yTop + (yWave - yTop)/2 - s*.55 - scroll*Hc*.5).toFixed(1)}px,0)`;
+    const ph = ((t - .9) / PER) % 1;
+    chevs.forEach((g, i) => {
+      const k = Math.max(0, Math.sin(Math.PI * clamp((ph - i*.16) / .42)));
+      g.style.opacity = t < .9 ? 0 : ((.35 + .65*k) * vis).toFixed(3);
+    });
+  };
+} else {
+  // sem WebGL: logo e ondas paradas, mesma composição
+  hero.classList.add('semgl');
+  const svg = hero.querySelector('.fb svg');
+  const ps = PADRAO.map(([c]) => el('path', { fill: c }, svg));
+  ajustavel(svg, 180, o => { let acc = 10; PADRAO.forEach(([c, w], i) => { const hw = w*180*2.2; ps[i].setAttribute('d', pathFaixa(o.W, acc, acc + hw, 8, -i*.05, -20, 48, o.ref)); acc += hw + GAP*180*2.2; }); });
+}
+
+/* ---------- abertura → hero ---------- */
+const abertura = document.getElementById('abertura');
+const vAb = abertura.querySelector('video');
+const AB_DUR = 58/30, FUSAO = .12, T_AB = AB_DUR - FUSAO;
+let T0 = null, liberado = false, lenis = null;
+function liberar(){
+  if(liberado) return; liberado = true;
+  document.body.classList.remove('locked');
+  if(lenis) lenis.start();
+  ScrollTrigger.refresh();
+}
+function pulaAbertura(){ if(T0 === null) T0 = now() - AB_DUR; }
+if(RM || scrollY > innerHeight){ pulaAbertura(); }
+else {
+  vAb.src = innerWidth > innerHeight ? 'video/abertura-computador.mp4' : 'video/abertura-celular.mp4';
+  vAb.addEventListener('playing', () => { if(T0 === null) T0 = now() - vAb.currentTime; }, { once: true });
+  vAb.addEventListener('error', pulaAbertura);
+  const p = vAb.play(); if(p && p.catch) p.catch(pulaAbertura);   // autoplay bloqueado (modo pouca energia): vai direto pro hero
+  setTimeout(() => { if(T0 === null) pulaAbertura(); }, 3500);
+}
+gsap.ticker.add(() => {
+  if(T0 === null) return;                          // vídeo carregando: tela off-white
+  const t = now() - T0;
+  if(t < AB_DUR + .1) abertura.style.opacity = 1 - lin(t, T_AB, T_AB + FUSAO);
+  if(t > AB_DUR && abertura.style.display !== 'none'){ abertura.style.display = 'none'; vAb.removeAttribute('src'); vAb.load(); liberar(); }
+  drawHero(Math.max(0, t - T_AB));
+});
+
+/* ---------- títulos: linhas que sobem de dentro da máscara ---------- */
+function linhas(){
+  document.querySelectorAll('[data-linhas]').forEach(h => {
+    gsap.from(h.querySelectorAll('.ln>span'), { yPercent: 112, rotate: 3, duration: 1.15, ease: 'expo.out', stagger: .09,
+      scrollTrigger: { trigger: h, start: 'top 86%', once: true } });
+  });
+  document.querySelectorAll('[data-sobe]').forEach(p => {
+    gsap.from(p, { y: 24, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: p, start: 'top 92%', once: true } });
+  });
+}
+// texto corrido: cada linha sobe de dentro da própria máscara, uma depois da outra (mesma linguagem dos títulos)
+function textos(){
+  document.querySelectorAll('[data-texto]').forEach(p => {
+    SplitText.create(p, { type: 'lines', mask: 'lines', linesClass: 'lt', autoSplit: true,
+      onSplit: self => gsap.from(self.lines, { yPercent: 108, duration: 1.05, ease: 'expo.out', stagger: .07,
+        scrollTrigger: { trigger: p, start: 'top 88%', once: true } }) });
+  });
+}
+
+/* ---------- 2 · a banda: as fotos se revezam numa maré da marca ---------- */
+function montaFotoBanda(){
+  const svg = document.getElementById('foto-banda'), W = 540, H = 691;
+  const defs = el('defs', {}, svg);
+  const cpath = el('path', {}, el('clipPath', { id: 'cpBanda' }, defs));
+  const wpath = el('path', {}, el('clipPath', { id: 'cpTroca' }, defs));
+  const g = el('g', { 'clip-path': 'url(#cpBanda)' }, svg);
+  const cam = el('g', {}, g);
+  const FOTOS = ['banda-1', 'banda-2'];
+  const camadas = FOTOS.map(f => { const w = el('g', {}, cam);
+    el('image', { href: `img/${f}.jpg`, x: 0, y: 0, width: W, height: H, preserveAspectRatio: 'xMidYMid slice' }, w); return w; });
+  const onda = [RED, RX, PK].map(c => el('path', { fill: c }, g));
+  const fx = [RED, RX, PK].map(c => el('path', { fill: c }, svg));
+  const st = { p: 0, ts: 0 };
+  const AMP = 16, CICLO = 3.6, TR = 1.15, TOPO = 80;
+  let ultimo = '';
+  const troca = () => {
+    const k = Math.floor(st.ts / CICLO), loc = st.ts - k*CICLO;
+    const b = k % FOTOS.length, n = (k + 1) % FOTOS.length;
+    const w = loc > CICLO - TR ? eInOut((loc - (CICLO - TR)) / TR) : 0;
+    const chegada = loc < .9 && k > 0 ? eOut(loc / .9) : 1;      // a foto que acabou de entrar termina de assentar
+    // fora da troca a foto fica parada: nada pra redesenhar
+    const estado = w > 0 ? `t${k}:${w.toFixed(4)}` : `p${k}:${chegada.toFixed(4)}`;
+    if(estado === ultimo) return; ultimo = estado;
+    // a maré atravessa a foto na diagonal, alternando o lado a cada troca
+    const tilt = k % 2 ? 170 : -170, ph = k*1.9 + w*3.6, A2 = 24;
+    const ew = H + 150 - w*(H + 330);
+    let d = '';
+    for(let i = 0; i <= 40; i++){ const x = W*i/40; d += `${i ? 'L' : 'M'}${x.toFixed(1)},${(ew + borda(x, W, A2, ph, tilt)).toFixed(1)}`; }
+    wpath.setAttribute('d', d + `L${W},${H + 400}L0,${H + 400}Z`);
+    let acc = 0;
+    [[30, 5], [17, 5], [11, 0]].forEach(([wd, gap], i) => {
+      onda[i].setAttribute('d', w > 0 && w < 1 ? pathFaixa(W, ew - acc - wd, ew - acc, A2, ph, tilt, 40) : '');
+      acc += wd + gap;
+    });
+    camadas.forEach((c, i) => {
+      const entra = i === n && w > 0, fica = i === b;
+      c.style.display = entra || fica ? '' : 'none';
+      if(entra){ c.setAttribute('clip-path', 'url(#cpTroca)'); if(cam.lastChild !== c) cam.appendChild(c); }
+      else c.removeAttribute('clip-path');
+      if(!entra && !fica) return;
+      // a que sai é empurrada pra cima e cresce de leve; a que entra vem de baixo e assenta
+      const s = fica ? 1 + .05*w + .03*(1 - chegada) : 1.03;
+      const dy = fica ? -46*w + 14*(1 - chegada) : 14 + 30*(1 - w);
+      c.setAttribute('transform', `translate(${W/2} ${H/2}) scale(${s.toFixed(4)}) translate(${-W/2} ${(-H/2 + dy).toFixed(2)})`);
+    });
+  };
+  // as duas bordas da foto são sempre ondas: a de cima sobe com a maré e assenta; a de baixo é fixa
+  const upd = () => {
+    const p = st.p, edge = H + 40 - p*(H + 40 - TOPO), ph = p*3.2;
+    let d = '';
+    for(let i = 0; i <= 40; i++){ const x = W*i/40; d += `${i ? 'L' : 'M'}${x.toFixed(1)},${(edge + borda(x, W, AMP, ph, -24)).toFixed(1)}`; }
+    for(let i = 40; i >= 0; i--){ const x = W*i/40; d += `L${x.toFixed(1)},${(H - 20 + borda(x, W, 11, 1.7, -20)).toFixed(1)}`; }
+    cpath.setAttribute('d', d + 'Z');
+    let acc = 0;
+    [[26, 4], [15, 4], [10, 0]].forEach(([w, gap], i) => { fx[i].setAttribute('d', pathFaixa(W, edge - acc - w, edge - acc, AMP, ph, -24, 40)); acc += w + gap; });
+    cam.setAttribute('transform', `translate(${W/2} ${H/2}) scale(${(1.14 - .14*p).toFixed(4)}) translate(${-W/2} ${-H/2})`);
+  };
+  upd(); troca();
+  gsap.to(st, { p: 1, ease: 'none', onUpdate: upd, scrollTrigger: { trigger: svg, start: 'top 95%', end: () => desk() ? 'top 45%' : 'top 25%', scrub: .6, invalidateOnRefresh: true } });
+  const vis = visivel(svg);
+  gsap.ticker.add((tm, dt) => { if(!vis.on || st.p < .97) return; st.ts += dt/1000; troca(); });
+}
+
+/* ---------- 3 · o show ---------- */
+function show(){
+  document.querySelectorAll('.fato').forEach((f, i) => {
+    const tl = gsap.timeline({ scrollTrigger: { trigger: f, start: 'top 88%', once: true }, delay: desk() ? (i % 2)*.12 : 0 });
+    tl.from(f.querySelector('line'), { drawSVG: '0%', duration: 1.1, ease: 'expo.inOut' })
+      .from(f.querySelector('.rot'), { x: -16, opacity: 0, duration: .7, ease: 'expo.out' }, .35)
+      .from(f.querySelectorAll('.ln>span'), { yPercent: 112, duration: 1, ease: 'expo.out', stagger: .08 }, .45);
+  });
+}
+
+/* ---------- 4 · repertório: fileiras em sentidos opostos, presas à rolagem ---------- */
+function marca(){
+  return `<svg class="m" viewBox="0 0 36 24" aria-hidden="true"><path d="M1,5 C9,1 16,9 24,5 S33,2 35,4" stroke="${RED}" stroke-width="4.4" fill="none" stroke-linecap="round"/><path d="M1,12 C9,8 16,16 24,12 S33,9 35,11" stroke="${RX}" stroke-width="4.4" fill="none" stroke-linecap="round"/><path d="M1,19 C9,15 16,23 24,19 S33,16 35,18" stroke="${PK}" stroke-width="4.4" fill="none" stroke-linecap="round"/></svg>`;
+}
+function repertorio(){
+  const filas = [...document.querySelectorAll('.fila')];
+  filas.forEach(f => {
+    const um = f.dataset.musicas.split('|').map(m => m.endsWith('*')
+      ? `<span>${m.slice(0,-1)}<span class="aut">AUTORAL</span></span>${marca()}` : `<span>${m}</span>${marca()}`).join('');
+    f.setAttribute('aria-label', f.dataset.musicas.replace(/\*/g, '').split('|').join(', '));
+    f.innerHTML = `<span class="tr" aria-hidden="true">${um}${um}${um}</span>`;
+  });
+  const trs = filas.map(f => f.firstChild);
+  let larg = trs.map(t => t.offsetWidth/3);
+  ScrollTrigger.addEventListener('refresh', () => { larg = trs.map(t => t.offsetWidth/3); });
+  const pos = larg.map((w, i) => -w * (.15 + i*.21));
+  const sec = { on: false, prog: 0, vel: 0 };
+  ScrollTrigger.create({ trigger: '#repertorio', start: 'top bottom', end: 'bottom top',
+    onToggle: s => sec.on = s.isActive,
+    onUpdate: s => { sec.prog = s.progress; sec.vel = gsap.utils.clamp(-3000, 3000, s.getVelocity()); } });
+  const setX = trs.map(t => gsap.quickSetter(t, 'x', 'px'));
+  gsap.ticker.add((time, dt) => {
+    if(!sec.on) return;
+    const base = (desk() ? 34 : 22) + Math.abs(sec.vel)*.035;
+    filas.forEach((f, i) => {
+      const dir = +f.dataset.dir, w = larg[i];
+      pos[i] += dir * (dt/1000) * base;
+      setX[i](gsap.utils.wrap(-w, 0, pos[i] + dir*sec.prog*w*.55));
+    });
+    sec.vel *= .9;
+  });
+  filas.forEach((f, i) => gsap.from(f, { opacity: 0, xPercent: (i % 2 ? 1 : -1)*6, duration: 1.3, ease: 'expo.out',
+    scrollTrigger: { trigger: f, start: 'top 94%', once: true } }));
+}
+
+/* ---------- faixas de passagem: desenho fixo, movimento por transform ---------- */
+function passagem(id){
+  const box = document.getElementById(id), svg = box.querySelector('svg'), H = 450;
+  const de = box.dataset.de, para = box.dataset.para;
+  box.style.background = de;
+  const cores = (para === PK ? [RED, RX, RED, RX, PK] : [RX, RED, RX, RED, OW]);
+  const larg = [30, 18, 26, 14];
+  const ps = cores.map(c => el('path', { fill: c }, svg));
+  ajustavel(svg, H, o => {
+    let acc = 40;
+    larg.forEach((w, i) => { ps[i].setAttribute('d', pathFaixa(o.W, acc, acc + w, 22, id.length - i*.18, 34, 64, o.ref)); acc += w + 6; });
+    ps[4].setAttribute('d', pathFaixa(o.W, acc, H + 40, 22, id.length - .72, 34, 64, o.ref));
+  });
+  gsap.fromTo(svg, { yPercent: 20, xPercent: 0 }, { yPercent: 0, xPercent: -9, ease: 'none',
+    scrollTrigger: { trigger: box, start: 'top bottom', end: 'bottom top', scrub: .5 } });
+}
+
+/* ---------- 5 · ao vivo: janela vertical que cresce até a tela, vídeo real com som ---------- */
+function aoVivo(){
+  const sec = document.getElementById('aovivo');
+  const svg = sec.querySelector('.ondas'), H = 518;
+  const ps = PADRAO.map(([c]) => el('path', { fill: c }, svg));
+  ajustavel(svg, H, o => {
+    let acc = 60;
+    PADRAO.forEach(([c, w], i) => { const hw = w*H*1.15; ps[i].setAttribute('d', pathFaixa(o.W, acc, acc + hw, 20, -i*.05, -40, 80, o.ref)); acc += hw + GAP*H; });
+  });
+  gsap.set(svg, { yPercent: -50 });
+  // as ondas correm devagar de um lado pro outro (transform, sem redesenhar)
+  const vis = visivel(sec, 100);
+  const setOx = gsap.quickSetter(svg, 'xPercent');
+  let ot = 0;
+  gsap.ticker.add((tm, dt) => { if(!vis.on) return; ot += dt/1000; setOx(Math.sin(ot*.22)*7); });
+  // celular: a janela vira a tela inteira; computador: o vídeo em pé ocupa a altura toda
+  const tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: '+=150%', pin: true, scrub: .7, invalidateOnRefresh: true } });
+  tl.to('#janela', { width: () => desk() ? innerHeight*9/16 : innerWidth, height: () => innerHeight, top: '50%', ease: 'power2.inOut', duration: 1 }, 0)
+    .to('#aovivo .tit', { y: () => desk() ? 0 : -innerHeight*.4, x: () => desk() ? -innerWidth*.12 : 0, opacity: () => desk() ? 0 : 1, ease: 'power2.in', duration: .7 }, 0)
+    .to('#aovivo .leg', { y: '30vh', opacity: 0, ease: 'power2.in', duration: .6 }, 0)
+    .to(svg, { scale: 1.25, ease: 'none', duration: 1 }, 0)
+    .fromTo('#janela video', { scale: 1.12 }, { scale: 1, ease: 'none', duration: 1 }, 0);
+  gsap.from('#aovivo .tit', { yPercent: 100, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: sec, start: 'top 60%', once: true } });
+  gsap.from('#janela', { clipPath: 'inset(100% 0 0 0)', duration: 1.3, ease: 'expo.inOut', scrollTrigger: { trigger: sec, start: 'top 55%', once: true } });
+  const v = sec.querySelector('video'), som = document.getElementById('som');
+  ScrollTrigger.create({ trigger: sec, start: 'top bottom', end: 'bottom top', onToggle: s => s.isActive ? v.play().catch(() => {}) : v.pause() });
+  som.addEventListener('click', () => {
+    const ligar = v.muted;
+    v.muted = !ligar; som.setAttribute('aria-pressed', ligar); som.setAttribute('aria-label', ligar ? 'Desligar o som do vídeo' : 'Ligar o som do vídeo');
+    if(ligar){ v.volume = 1; v.play().catch(() => {}); }
+  });
+}
+
+/* ---------- 6 · autoral: o disco sai da capa ---------- */
+function disco(){
+  const box = document.getElementById('disco');
+  const vinil = box.querySelector('.vinil'), sulcos = box.querySelector('.sulcos'), selo = box.querySelector('.selo'), capa = box.querySelector('.capa');
+  const S = 270, R = 132;
+  // vinil: sulcos, faixas e reflexo (desenhados uma vez)
+  sulcos.innerHTML = `<defs>
+    <radialGradient id="vinilG" cx="0" cy="0" r="${R}" gradientUnits="userSpaceOnUse"><stop offset=".38" stop-color="#262422"/><stop offset=".6" stop-color="#141312"/><stop offset="1" stop-color="#0c0b0b"/></radialGradient>
+    <radialGradient id="reflexo" cx="0" cy="0" r="${R}" gradientUnits="userSpaceOnUse"><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset=".72" stop-color="#fff" stop-opacity=".16"/><stop offset=".97" stop-color="#fff" stop-opacity=".04"/></radialGradient>
+    <clipPath id="cpVinil"><circle r="${R - 1}"/></clipPath></defs>`;
+  el('circle', { r: R, fill: 'url(#vinilG)' }, sulcos);
+  for(let r = 60; r < R - 4; r += 2.1) el('circle', { r: r.toFixed(1), fill: 'none', stroke: '#000', 'stroke-opacity': .5, 'stroke-width': .7 }, sulcos);
+  for(let r = 61; r < R - 4; r += 4.2) el('circle', { r: r.toFixed(1), fill: 'none', stroke: '#fff', 'stroke-opacity': .05, 'stroke-width': .7 }, sulcos);
+  [78, 96, 114].forEach(r => el('circle', { r, fill: 'none', stroke: '#2d2a28', 'stroke-width': 2.6 }, sulcos));
+  el('circle', { r: R - 1.2, fill: 'none', stroke: '#3b3835', 'stroke-width': 2.4 }, sulcos);
+  const gomo = (a0, a1) => { const p = a => `${(R*Math.cos(a)).toFixed(1)},${(R*Math.sin(a)).toFixed(1)}`; return `M0,0L${p(a0)}A${R},${R} 0 0 1 ${p(a1)}Z`; };
+  const luz = el('g', { 'clip-path': 'url(#cpVinil)' }, sulcos);
+  for(let i = 0; i < 5; i++){
+    el('path', { d: gomo(-2.3 - i*.09, -2.05 + i*.09), fill: 'url(#reflexo)', opacity: .32 }, luz);
+    el('path', { d: gomo(.85 - i*.09, 1.05 + i*.09), fill: 'url(#reflexo)', opacity: .22 }, luz);
+  }
+  // selo: SVG próprio, gira por transform (não redesenha o disco)
+  selo.innerHTML = `<defs><mask id="mLogoSelo" style="mask-type:alpha"><image href="assets/logo-mascara.png" x="-29" y="-11" width="58" height="22" preserveAspectRatio="xMidYMid meet"/></mask>
+    <path id="arcoSelo" d="M0,-43 A43,43 0 1 1 -.01,-43"/></defs>`;
+  el('circle', { r: 57, fill: RED }, selo);
+  el('circle', { r: 51.5, fill: 'none', stroke: OW, 'stroke-opacity': .4, 'stroke-width': .6 }, selo);
+  el('rect', { x: -29, y: -11, width: 58, height: 22, fill: OW, mask: 'url(#mLogoSelo)' }, selo);
+  const tx = el('text', { fill: OW, 'font-size': 6.6, 'font-weight': 700, 'letter-spacing': 2.3, 'font-family': 'Montserrat' }, selo);
+  el('textPath', { href: '#arcoSelo' }, tx).textContent = 'BANDA CRIVZ · PRIMEIRO DISCO · 2027 ·';
+  el('circle', { r: 4.4, fill: PK }, selo);
+  el('circle', { r: 4.4, fill: 'none', stroke: '#000', 'stroke-opacity': .5, 'stroke-width': 1 }, selo);
+  // capa: a primeira dobra do site vira a capa do disco (desenhada uma vez)
+  capa.innerHTML = `<defs><linearGradient id="luzCapa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></linearGradient>
+    <clipPath id="cpCapa"><rect width="${S}" height="${S}"/></clipPath>
+    <mask id="mLogoCapa" style="mask-type:alpha"><image href="assets/logo-mascara.png" x="38" y="50" width="194" height="76" preserveAspectRatio="xMidYMid meet"/></mask></defs>`;
+  for(let i = 0; i < 6; i++) el('rect', { x: 7 - i*2.4, y: 12 - i*2.4, width: S + i*4.8, height: S + i*4.8, rx: i*2.4, fill: '#000', opacity: .11 }, capa);
+  const cg = el('g', { 'clip-path': 'url(#cpCapa)' }, capa);
+  el('rect', { width: S, height: S, fill: OW }, cg);
+  el('circle', { cx: S/2, cy: S/2, r: 126, fill: 'none', stroke: PK, 'stroke-opacity': .06, 'stroke-width': 9 }, cg);
+  el('rect', { x: 38, y: 50, width: 194, height: 76, fill: RED, mask: 'url(#mLogoCapa)' }, cg);
+  let acc = 160;
+  PADRAO.forEach(([c, w], i) => { const hw = w*S*1.3; el('path', { fill: c, d: pathFaixa(S, acc, acc + hw, 7, .8 - i*.05, -18) }, cg); acc += hw + GAP*S*1.3; });
+  el('rect', { width: S, height: S, fill: 'url(#luzCapa)' }, cg);
+  el('rect', { x: .5, y: .5, width: S - 1, height: S - 1, fill: 'none', stroke: '#fff', 'stroke-opacity': .22 }, cg);
+  // movimento: tudo por transform (camadas da placa de vídeo)
+  gsap.from(capa, { yPercent: 40, opacity: 0, rotation: -4, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: box, start: 'top 88%', once: true } });
+  const st = { s: 0 };
+  gsap.to(st, { s: 1, ease: 'none', scrollTrigger: { trigger: box, start: 'top 65%', end: () => desk() ? 'center 50%' : 'top 14%', scrub: .8, invalidateOnRefresh: true },
+    onUpdate: () => { const e = eInOut(st.s); gsap.set(vinil, { xPercent: 84*e, rotation: -8*e }); } });
+  const vis = visivel(box);
+  const setRot = gsap.quickSetter(selo, 'rotation', 'deg');
+  let a = 0;
+  gsap.ticker.add((tm, dt) => { if(!vis.on) return; a += dt/1000*(6 + 54*st.s); setRot(a); });
+  gsap.from('#ano .ln>span', { yPercent: 115, duration: 1.2, ease: 'expo.out', stagger: .1, scrollTrigger: { trigger: '#ano', start: 'top 90%', once: true } });
+}
+
+/* ---------- 7 · contrate: a maré fecha a página ---------- */
+function contrate(){
+  const box = document.getElementById('mare'), svg = box.querySelector('svg'), H = 528;
+  const lista = [[RED,26],[RX,15],[RED,22],[PK,10],[RX,19],[RED,13]];
+  const ps = lista.map(([c]) => el('path', { fill: c }, svg));
+  const fim = el('path', { fill: PK }, svg);
+  ajustavel(svg, H, o => {
+    let acc = 30;
+    lista.forEach(([c, w], i) => { ps[i].setAttribute('d', pathFaixa(o.W, acc, acc + w, 14, 1.2 - i*.05, -30, 64, o.ref)); acc += w + 5; });
+    fim.setAttribute('d', pathFaixa(o.W, acc, H + 80, 14, .9, -30, 64, o.ref));
+  });
+  gsap.fromTo(svg, { yPercent: 30, xPercent: 0 }, { yPercent: 0, xPercent: -8, ease: 'none',
+    scrollTrigger: { trigger: box, start: 'top bottom', end: 'bottom bottom', scrub: .6 } });
+  gsap.from('#btn', { y: 30, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '#btn', start: 'top 94%', once: true } });
+  gsap.to('#btn .brilho', { xPercent: 240, duration: 1.4, ease: 'power2.inOut', repeat: -1, repeatDelay: 2.1, delay: .6 });
+  gsap.from('footer > *', { y: 20, opacity: 0, duration: 1, ease: 'expo.out', stagger: .1, scrollTrigger: { trigger: 'footer', start: 'top 98%', once: true } });
+  // barra fixa: aparece depois do hero, sai quando o botão grande entra
+  const barra = document.getElementById('barra');
+  const mostra = gsap.to(barra, { y: 0, duration: .6, ease: 'expo.out', paused: true });
+  ScrollTrigger.create({ trigger: '#banda', start: 'top 40%', endTrigger: '#contrate', end: 'top 70%',
+    onToggle: s => s.isActive ? mostra.play() : mostra.reverse() });
+}
+
+/* ---------- montagem ---------- */
+const loadImg = src => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+(async () => {
+  if(!RM){
+    lenis = new Lenis({ lerp: .14, wheelMultiplier: 1.05, autoRaf: false });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t*1000));
+    gsap.ticker.lagSmoothing(0);
+    if(!liberado) lenis.stop();
+  }
+  await document.fonts.ready;
+  if(gl){
+    const logo = await loadImg('assets/logo-mascara.png');
+    LOGO_ASP = logo.width / logo.height;
+    const tx = gl.createTexture(); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, tx);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, logo); gl.uniform1i(U('uLogo'), 1);
+    resizeHero(); addEventListener('resize', resizeHero);
+    ScrollTrigger.create({ trigger: hero, start: 'top top', end: 'bottom bottom', onUpdate: s => heroProg = s.progress });
+    // a maré já passou e a primeira dobra saiu da tela: para de desenhar
+    ScrollTrigger.create({ trigger: hero, start: 'top bottom', end: 'bottom top', onToggle: s => heroVis = s.isActive });
+    heroPronto = true;
+  }
+  linhas(); textos();
+  montaFotoBanda(); show(); repertorio();
+  passagem('passa1'); aoVivo(); disco(); passagem('passa2'); contrate();
+  ScrollTrigger.addEventListener('refreshInit', () => ajustes.forEach(f => f()));
+  ScrollTrigger.refresh();
+})();
+</script>
+</body>
+</html>
