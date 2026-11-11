@@ -478,10 +478,14 @@ else {
 }
 gsap.ticker.add(() => {
   if(T0 === null) return;                          // vídeo carregando: tela off-white
+  // enquanto o vídeo toca, o relógio da entrada é o do próprio vídeo (se ele engasgar, a fusão espera)
+  if(!liberado && vAb.src && !vAb.paused && !vAb.ended) T0 = now() - vAb.currentTime;
   const t = now() - T0;
-  if(t < AB_DUR + .1) abertura.style.opacity = 1 - lin(t, T_AB, T_AB + FUSAO);
-  if(t > AB_DUR && abertura.style.display !== 'none'){ abertura.style.display = 'none'; vAb.removeAttribute('src'); vAb.load(); liberar(); }
-  drawHero(Math.max(0, t - T_AB));
+  // a fusão só começa no fim do vídeo: o último quadro é a logo parada, idêntica à pose inicial do hero
+  if(t < AB_DUR + FUSAO + .1) abertura.style.opacity = 1 - lin(t, AB_DUR, AB_DUR + FUSAO);
+  if(t > AB_DUR + FUSAO && abertura.style.display !== 'none'){ abertura.style.display = 'none'; vAb.removeAttribute('src'); vAb.load(); liberar(); }
+  // o hero fica parado nessa pose durante a fusão e só depois anda
+  drawHero(Math.max(0, t - AB_DUR - FUSAO));
 });
 
 /* ---------- títulos: linhas que sobem de dentro da máscara ---------- */
