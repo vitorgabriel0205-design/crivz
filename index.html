@@ -258,10 +258,10 @@ footer .ig{display:inline-block;margin-top:3.2vw;font-weight:500;font-size:3.8vw
   <section id="repertorio">
     <h2 class="it tit" data-linhas><span class="ln"><span>No repertório</span></span></h2>
     <p class="corpo" data-texto>Os clássicos que a casa inteira canta junto, e música nossa no meio.</p>
-    <div class="fila red it" data-dir="-1" data-musicas="Velha Infância|Anna Júlia|Garota Nacional|Do Seu Lado"></div>
-    <div class="fila vazada it" data-dir="1" data-musicas="Tempo Perdido|Ainda Bem|Vou Dizer*|Lanterna dos Afogados"></div>
-    <div class="fila it" data-dir="-1" data-musicas="Sutilmente|Primeiros Erros|Mulher de Fases|Fácil"></div>
-    <div class="fila vazada it" data-dir="1" data-musicas="Wonderwall|Pais e Filhos|Exagerado|O Sol"></div>
+    <div class="fila red it" data-dir="-1" data-musicas="Skank|Beatles|Legião Urbana|Jota Quest"></div>
+    <div class="fila vazada it" data-dir="1" data-musicas="Tim Maia|Los Hermanos|Crivz*|Paralamas"></div>
+    <div class="fila it" data-dir="-1" data-musicas="Oasis|Cazuza|Tribalistas|Charlie Brown Jr."></div>
+    <div class="fila vazada it" data-dir="1" data-musicas="Titãs|Marisa Monte|Capital Inicial|Coldplay"></div>
   </section>
 
   <div class="passa" id="passa1" data-de="#e8c39e" data-para="#1f1e1c" aria-hidden="true"><svg preserveAspectRatio="none"></svg></div>
@@ -515,7 +515,7 @@ function montaFotoBanda(){
   const wpath = el('path', {}, el('clipPath', { id: 'cpTroca' }, defs));
   const g = el('g', { 'clip-path': 'url(#cpBanda)' }, svg);
   const cam = el('g', {}, g);
-  const FOTOS = ['banda-1', 'banda-2'];
+  const FOTOS = ['banda-1', 'banda-3', 'banda-2', 'banda-4'];   // palco Major, João na bateria, os dois, Caíque cantando
   const camadas = FOTOS.map(f => { const w = el('g', {}, cam);
     el('image', { href: `img/${f}.jpg`, x: 0, y: 0, width: W, height: H, preserveAspectRatio: 'xMidYMid slice' }, w); return w; });
   const onda = [RED, RX, PK].map(c => el('path', { fill: c }, g));
