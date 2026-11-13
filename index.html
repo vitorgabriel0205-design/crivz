@@ -119,13 +119,21 @@ button{font:inherit;color:inherit}
 /* 5b · de perto: três vídeos curtos em pé, com som */
 #perto{background:var(--pk);color:var(--ow);padding:24vw 0 8vw;position:relative}
 #perto .tit{padding:0 var(--pad);margin-bottom:8vw}
-#perto .trilho{display:flex;gap:4vw;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 var(--pad) 2vw;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-#perto .trilho::-webkit-scrollbar{display:none}
-.clip{flex:none;width:72vw;scroll-snap-align:center;margin:0}
+#perto{overflow:hidden;--cw:76vw}
+#perto .palco{position:relative;height:calc(var(--cw)*16/9);touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab}
+#perto .palco.arrasta{cursor:grabbing}
+.clip{position:absolute;left:50%;top:0;width:var(--cw);margin:0 0 0 calc(var(--cw)/-2);will-change:transform}
 .clip .tela{position:relative;aspect-ratio:9/16;overflow:hidden;background:#141312}
-.clip video{width:100%;height:100%;object-fit:cover}
-.clip figcaption{display:flex;gap:.9em;align-items:baseline;margin-top:3.4vw}
-.clip figcaption .n{color:var(--red)}
+.clip video{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.clip .veu{position:absolute;inset:0;background:var(--pk);pointer-events:none;z-index:2;opacity:0}
+.clip .som{transition:opacity .4s}
+.clip:not(.centro) .som{opacity:0;pointer-events:none}
+#perto .nav{display:flex;align-items:center;gap:4vw;width:var(--cw);margin:5vw auto 0}
+#perto .fio{flex:1;height:2px;background:rgba(232,195,158,.18);overflow:hidden}
+#perto .seta{flex:none;width:44px;height:44px;display:grid;place-items:center;padding:0;border:1px solid rgba(232,195,158,.35);border-radius:50%;background:none;color:var(--ow);cursor:pointer}
+#perto .seta svg{width:20px;height:20px}
+#perto .seta.prox{background:var(--red);border-color:var(--red)}
+#perto .fio i{display:block;height:100%;background:var(--red);transform-origin:0 50%;transform:scaleX(0)}
 
 /* 6 · autoral */
 #autoral{background:var(--pk);color:var(--ow);padding:26vw var(--pad) 22vw;position:relative;overflow:hidden;display:flex;flex-direction:column}
@@ -195,9 +203,10 @@ footer .ig{display:inline-block;margin-top:3.2vw;font-weight:500;font-size:3.8vw
 
   #perto{padding:11vw 0 7vw}
   #perto .tit{margin-bottom:48px}
-  #perto .trilho{display:grid;grid-template-columns:repeat(3,min(40vh,28vw));justify-content:start;gap:2.2vw;overflow:visible;padding:0 var(--pad)}
-  .clip{width:auto}
-  .clip figcaption{margin-top:16px}
+  #perto{--cw:min(calc(74vh*9/16),30vw)}
+  #perto .nav{margin-top:28px;gap:20px;width:calc(var(--cw) + 2*(52px + 20px))}
+  #perto .seta{width:52px;height:52px}
+  #perto .seta:hover{border-color:var(--ow)}
 
   #autoral{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);column-gap:4vw;align-items:center;padding:12vw var(--pad) 10vw}
   #autoral .txt{display:block}
@@ -250,7 +259,7 @@ footer .ig{display:inline-block;margin-top:3.2vw;font-weight:500;font-size:3.8vw
         <span class="ln"><span>pra casa cheia</span></span>
         <span class="ln"><span class="red">cantar junto.</span></span>
       </h2>
-      <p class="corpo" data-texto>A Crivz se formou tocando nos bares e pubs de BH, e é lá que se sente em casa. Músicas que todo mundo conhece, com a pegada da banda.</p>
+      <p class="corpo" data-texto>A Crivz se formou tocando nos bares e pubs de BH, consolidando seu nome com o público jovem da capital com um repertório que todo mundo conhece e a pegada da banda.</p>
     </div>
     <svg id="foto-banda" viewBox="0 0 540 691" preserveAspectRatio="none" role="img" aria-label="Caíque e João, da Crivz"></svg>
   </section>
@@ -299,7 +308,7 @@ footer .ig{display:inline-block;margin-top:3.2vw;font-weight:500;font-size:3.8vw
   <!-- 5b · de perto -->
   <section id="perto">
     <h2 class="it tit" data-linhas><span class="ln"><span>De perto.</span></span></h2>
-    <div class="trilho">
+    <div class="palco">
       <figure class="clip">
         <div class="tela"><video src="video/perto-caique.mp4" poster="img/perto-caique.jpg" muted playsinline loop preload="none" aria-label="Caíque cantando e tocando guitarra, com o João na bateria"></video>
         <button class="som" type="button" aria-pressed="false" aria-label="Ligar o som do vídeo">
@@ -307,7 +316,6 @@ footer .ig{display:inline-block;margin-top:3.2vw;font-weight:500;font-size:3.8vw
           <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
           <span class="t">Som</span>
         </button></div>
-        <figcaption class="rot"><span class="n">01</span><span>Voz e guitarra</span></figcaption>
       </figure>
       <figure class="clip">
         <div class="tela"><video src="video/perto-joao.mp4" poster="img/perto-joao.jpg" muted playsinline loop preload="none" aria-label="João na bateria e Caíque cantando com o público"></video>
@@ -316,7 +324,6 @@ footer .ig{display:inline-block;margin-top:3.2vw;font-weight:500;font-size:3.8vw
           <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
           <span class="t">Som</span>
         </button></div>
-        <figcaption class="rot"><span class="n">02</span><span>Bateria</span></figcaption>
       </figure>
       <figure class="clip">
         <div class="tela"><video src="video/perto-banda.mp4" poster="img/perto-banda.jpg" muted playsinline loop preload="none" aria-label="Caíque e João tocando juntos"></video>
@@ -325,16 +332,16 @@ footer .ig{display:inline-block;margin-top:3.2vw;font-weight:500;font-size:3.8vw
           <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
           <span class="t">Som</span>
         </button></div>
-        <figcaption class="rot"><span class="n">03</span><span>A banda</span></figcaption>
       </figure>
     </div>
+    <div class="nav"><button class="seta ant" type="button" aria-label="Vídeo anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><div class="fio" aria-hidden="true"><i></i></div><button class="seta prox" type="button" aria-label="Próximo vídeo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
   </section>
 
   <!-- 6 · autoral -->
   <section id="autoral">
     <div class="txt">
-      <h2 class="it tit" data-linhas><span class="ln"><span>Música</span></span><span class="ln"><span class="red">própria.</span></span></h2>
-      <p class="corpo" data-texto>Entre um show e outro, a Crivz grava as primeiras músicas autorais. O disco sai em</p>
+      <h2 class="it tit" data-linhas><span class="ln"><span>O <span class="red">disco.</span></span></span></h2>
+      <p class="corpo" data-texto>Entre um show e outro, o disco da Crivz está em produção e sai em</p>
       <div id="ano" class="it" aria-label="2027"><span class="ln"><span>2</span></span><span class="ln"><span>0</span></span><span class="ln"><span>2</span></span><span class="ln"><span>7</span></span></div>
     </div>
     <div id="disco" aria-hidden="true">
@@ -707,7 +714,8 @@ function aoVivo(){
   gsap.from('#aovivo .tit', { yPercent: 100, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: sec, start: 'top 60%', once: true } });
   gsap.from('#janela', { clipPath: 'inset(100% 0 0 0)', duration: 1.3, ease: 'expo.inOut', scrollTrigger: { trigger: sec, start: 'top 55%', once: true } });
   const v = sec.querySelector('video'), som = document.getElementById('som');
-  ScrollTrigger.create({ trigger: sec, start: 'top bottom', end: 'bottom top', onToggle: s => s.isActive ? v.play().catch(() => {}) : v.pause() });
+  // visibilidade real (a seção fica presa durante o zoom; um ScrollTrigger sem o pin pausava o vídeo no meio)
+  new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? v.play().catch(() => {}) : v.pause())).observe(sec);
   ligaSom(v, som);
 }
 
@@ -724,16 +732,134 @@ function ligaSom(v, bt){
   });
 }
 
-/* ---------- 5b · de perto: cada vídeo toca quando aparece e pausa quando sai ---------- */
+/* ---------- 5b · de perto: carrossel em loop, o do centro toca, passa sozinho ---------- */
 function dePerto(){
-  const clips = [...document.querySelectorAll('#perto .clip')];
+  const sec = document.getElementById('perto'), palco = sec.querySelector('.palco'), barra = sec.querySelector('.fio i');
+  const base = [...palco.querySelectorAll('.clip')];
+  // três voltas dos mesmos vídeos: sempre tem cartão chegando dos dois lados
+  base.forEach(c => palco.appendChild(c.cloneNode(true)));
+  base.forEach(c => palco.appendChild(c.cloneNode(true)));
+  const clips = [...palco.querySelectorAll('.clip')], N = clips.length, MEIO = N/2;
+  const vids = clips.map(c => c.querySelector('video'));
+  clips.forEach((c, i) => {
+    if(i >= base.length){ c.setAttribute('aria-hidden', 'true'); c.querySelector('.som').tabIndex = -1; }
+    const veu = document.createElement('div'); veu.className = 'veu'; c.querySelector('.tela').appendChild(veu);
+    ligaSom(vids[i], c.querySelector('.som'));
+  });
+  const veus = clips.map(c => c.querySelector('.veu'));
+  const mod = (a, n) => ((a % n) + n) % n;
+  const st = { pos: N };            // posição contínua do carrossel (em cartões)
+  let passo = 1, vis = false, arrastando = false, centro = -1, ultimoDesenho = null;
+
+  const medir = () => { const w = clips[0].offsetWidth; passo = w*(desk() ? .86 : .92) + (desk() ? 28 : innerWidth*.035); ultimoDesenho = null; };
+  medir(); addEventListener('resize', medir);
+
+  // posiciona os cartões: o do centro em tamanho cheio, os vizinhos menores e escurecidos
+  function desenha(){
+    if(ultimoDesenho === st.pos) return; ultimoDesenho = st.pos;
+    for(let i = 0; i < N; i++){
+      const d = mod(i - st.pos + MEIO, N) - MEIO, a = Math.min(Math.abs(d), 2);
+      const esc = 1 - .2*Math.min(a, 1) - .06*Math.max(a - 1, 0);
+      clips[i].style.transform = `translate3d(${(d*passo).toFixed(1)}px,0,0) scale(${esc.toFixed(4)})`;
+      clips[i].style.zIndex = 10 - Math.round(Math.abs(d));
+      veus[i].style.opacity = (Math.min(a, 1)*.55 + Math.max(a - 1, 0)*.25).toFixed(3);
+    }
+  }
+
+  // só o do centro toca; quem chega ao centro começa do início
+  function atualizaCentro(){
+    const c = mod(Math.round(st.pos), N);
+    if(c === centro) return;
+    const antes = centro; centro = c;
+    clips.forEach((el, i) => el.classList.toggle('centro', i === c));
+    [-1, 0, 1].forEach(k => { const v = vids[mod(c + k, N)]; if(v.preload === 'none') v.preload = k ? 'metadata' : 'auto'; });
+    const som = antes >= 0 && !vids[antes].muted;
+    if(antes >= 0) vids[antes].pause();
+    const v = vids[c]; v.currentTime = 0;
+    // o som acompanha: se estava ligado no anterior, passa pro novo
+    if(som) marcaSom(antes, false), v.muted = false, marcaSom(c, true);
+    if(vis) v.play().catch(() => {
+      // o iPhone pode recusar tocar com som fora de um toque: segue mudo
+      if(!v.muted){ v.muted = true; marcaSom(c, false); v.play().catch(() => {}); }
+    });
+  }
+  function marcaSom(i, on){
+    const b = clips[i].querySelector('.som');
+    if(!on) vids[i].muted = true;
+    b.setAttribute('aria-pressed', on); b.setAttribute('aria-label', on ? 'Desligar o som do vídeo' : 'Ligar o som do vídeo');
+  }
+  vids.forEach(v => v.loop = false);
+
+  // avanço automático: um gesto seco a cada 6 s; com som ligado espera o vídeo acabar
+  const ESPERA = 6;
+  let relogio = 0, emMovimento = false;
+  function vai(alvo, dur = 1.15){
+    emMovimento = true; relogio = 0;
+    gsap.to(st, { pos: alvo, duration: dur, ease: 'expo.inOut', overwrite: true,
+      onUpdate: () => { desenha(); atualizaCentro(); },
+      onComplete: () => { emMovimento = false; } });
+  }
+  vids.forEach((v, i) => v.addEventListener('ended', () => {
+    if(i !== centro) return;
+    if(!arrastando && vis) vai(Math.round(st.pos) + 1); else { v.currentTime = 0; v.play().catch(() => {}); }
+  }));
+  gsap.ticker.add((tm, dt) => {
+    if(!vis) return;
+    const v = vids[centro];
+    if(v && !v.muted){ barra.style.transform = `scaleX(${v.duration ? (v.currentTime/v.duration).toFixed(4) : 0})`; return; }
+    if(arrastando || emMovimento){ barra.style.transform = 'scaleX(0)'; return; }
+    relogio += dt/1000;
+    barra.style.transform = `scaleX(${Math.min(relogio/ESPERA, 1).toFixed(4)})`;
+    if(relogio >= ESPERA) vai(Math.round(st.pos) + 1);
+  });
+
+  // arrastar (dedo ou mouse) e tocar num cartão do lado
+  let x0 = 0, y0 = 0, p0 = 0, decidido = false, ultimos = [];
+  palco.addEventListener('pointerdown', e => {
+    if(e.button > 0 || e.target.closest('.som')) return;
+    x0 = e.clientX; y0 = e.clientY; p0 = st.pos; decidido = false; arrastando = true; ultimos = [[e.timeStamp, e.clientX]];
+    gsap.killTweensOf(st); emMovimento = false;
+  });
+  palco.addEventListener('pointermove', e => {
+    if(!arrastando) return;
+    const dx = e.clientX - x0, dy = e.clientY - y0;
+    if(!decidido){
+      if(Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      if(Math.abs(dy) > Math.abs(dx)){ arrastando = false; vai(Math.round(st.pos), .5); return; }   // rolagem vertical: devolve pra página
+      decidido = true; palco.setPointerCapture(e.pointerId); palco.classList.add('arrasta');
+    }
+    st.pos = p0 - dx/passo; desenha(); atualizaCentro();
+    ultimos.push([e.timeStamp, e.clientX]); if(ultimos.length > 5) ultimos.shift();
+  });
+  const solta = e => {
+    if(!arrastando) return;
+    arrastando = false; palco.classList.remove('arrasta');
+    if(!decidido){
+      // toque: se foi num cartão do lado, vai até ele
+      const c = e.target.closest && e.target.closest('.clip'), i = clips.indexOf(c);
+      if(i >= 0 && i !== centro){ const d = mod(i - st.pos + MEIO, N) - MEIO; vai(Math.round(st.pos + d), .9); }
+      else vai(Math.round(st.pos), .4);
+      return;
+    }
+    const [t0, xa] = ultimos[0], vel = (e.clientX - xa)/Math.max(e.timeStamp - t0, 1);   // px/ms
+    let alvo = Math.round(st.pos - vel*180/passo);
+    alvo = Math.max(Math.round(p0) - 2, Math.min(Math.round(p0) + 2, alvo));
+    vai(alvo, .8);
+  };
+  palco.addEventListener('pointerup', solta); palco.addEventListener('pointercancel', solta);
+  palco.addEventListener('dragstart', e => e.preventDefault());
+  sec.querySelector('.seta.ant').addEventListener('click', () => vai(Math.round(st.pos) - 1, .9));
+  sec.querySelector('.seta.prox').addEventListener('click', () => vai(Math.round(st.pos) + 1, .9));
+
+  // toca só com a seção na tela
   const io = new IntersectionObserver(es => es.forEach(e => {
-    const v = e.target.querySelector('video');
-    if(e.isIntersecting && e.intersectionRatio > .55){ if(v.preload === 'none') v.preload = 'auto'; v.play().catch(() => {}); }
-    else { v.pause(); }
-  }), { threshold: [0, .55, 1] });
-  clips.forEach(c => { io.observe(c); ligaSom(c.querySelector('video'), c.querySelector('.som')); });
-  gsap.from(clips, { y: 60, opacity: 0, duration: 1.2, ease: 'expo.out', stagger: .12, scrollTrigger: { trigger: '#perto .trilho', start: 'top 85%', once: true } });
+    vis = e.isIntersecting && e.intersectionRatio > .4;
+    const v = vids[centro];
+    if(vis){ relogio = 0; v.play().catch(() => {}); } else v.pause();
+  }), { threshold: [0, .4, 1] });
+
+  desenha(); atualizaCentro(); io.observe(palco);
+  gsap.from(palco, { y: 60, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: palco, start: 'top 85%', once: true } });
 }
 
 /* ---------- 6 · autoral: o disco sai da capa ---------- */
