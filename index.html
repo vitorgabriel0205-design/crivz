@@ -106,15 +106,26 @@ button{font:inherit;color:inherit}
 #aovivo .tit{position:absolute;left:var(--pad);top:7vh;margin:0;color:var(--ow);z-index:2}
 #janela{position:absolute;left:50%;top:54%;width:58vw;height:103vw;transform:translate(-50%,-50%);overflow:hidden;z-index:1;background:var(--pk)}
 #janela video{width:100%;height:100%;object-fit:cover}
-#som{position:absolute;right:12px;bottom:12px;z-index:3;display:flex;align-items:center;gap:8px;border:0;cursor:pointer;
+.som{position:absolute;right:12px;bottom:12px;z-index:3;display:flex;align-items:center;gap:8px;border:0;cursor:pointer;
   background:rgba(31,30,28,.62);color:var(--ow);padding:9px 13px 9px 11px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   font-weight:600;font-size:10px;letter-spacing:.24em;text-transform:uppercase}
-#som svg{width:18px;height:18px}
-#som .on{display:none}
-#som[aria-pressed="true"]{background:var(--red)}
-#som[aria-pressed="true"] .on{display:block}
-#som[aria-pressed="true"] .off{display:none}
+.som svg{width:18px;height:18px}
+.som .on{display:none}
+.som[aria-pressed="true"]{background:var(--red)}
+.som[aria-pressed="true"] .on{display:block}
+.som[aria-pressed="true"] .off{display:none}
 #aovivo .leg{position:absolute;left:0;right:0;bottom:6vh;text-align:center;color:var(--ow);z-index:2}
+
+/* 5b · de perto: três vídeos curtos em pé, com som */
+#perto{background:var(--pk);color:var(--ow);padding:24vw 0 8vw;position:relative}
+#perto .tit{padding:0 var(--pad);margin-bottom:8vw}
+#perto .trilho{display:flex;gap:4vw;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 var(--pad) 2vw;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#perto .trilho::-webkit-scrollbar{display:none}
+.clip{flex:none;width:72vw;scroll-snap-align:center;margin:0}
+.clip .tela{position:relative;aspect-ratio:9/16;overflow:hidden;background:#141312}
+.clip video{width:100%;height:100%;object-fit:cover}
+.clip figcaption{display:flex;gap:.9em;align-items:baseline;margin-top:3.4vw}
+.clip figcaption .n{color:var(--red)}
 
 /* 6 · autoral */
 #autoral{background:var(--pk);color:var(--ow);padding:26vw var(--pad) 22vw;position:relative;overflow:hidden;display:flex;flex-direction:column}
@@ -180,7 +191,13 @@ footer .ig{display:inline-block;margin-top:3.2vw;font-weight:500;font-size:3.8vw
   #aovivo .tit{top:50%;margin-top:-.6em;font-size:clamp(56px,5.6vw,108px)}
   #janela{width:calc(72vh*9/16);height:72vh;top:50%}
   #aovivo .leg{bottom:5vh}
-  #som{right:16px;bottom:16px}
+  .som{right:16px;bottom:16px}
+
+  #perto{padding:11vw 0 7vw}
+  #perto .tit{margin-bottom:48px}
+  #perto .trilho{display:grid;grid-template-columns:repeat(3,min(40vh,28vw));justify-content:start;gap:2.2vw;overflow:visible;padding:0 var(--pad)}
+  .clip{width:auto}
+  .clip figcaption{margin-top:16px}
 
   #autoral{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);column-gap:4vw;align-items:center;padding:12vw var(--pad) 10vw}
   #autoral .txt{display:block}
@@ -205,8 +222,8 @@ footer .ig{display:inline-block;margin-top:3.2vw;font-weight:500;font-size:3.8vw
   #barra .rot{font-size:11px}
 }
 @media (hover:hover){
-  #btn,#barra,#som{transition:filter .25s}
-  #btn:hover,#barra:hover,#som:hover{filter:brightness(1.12)}
+  #btn,#barra,.som{transition:filter .25s}
+  #btn:hover,#barra:hover,.som:hover{filter:brightness(1.12)}
 }
 </style>
 </head>
@@ -270,13 +287,47 @@ footer .ig{display:inline-block;margin-top:3.2vw;font-weight:500;font-size:3.8vw
     <h2 class="it tit">Ao vivo</h2>
     <div id="janela">
       <video src="video/aovivo.mp4" poster="img/aovivo-poster.jpg" muted playsinline loop preload="metadata" aria-label="Crivz ao vivo no terraço do Rio California"></video>
-      <button id="som" type="button" aria-pressed="false" aria-label="Ligar o som do vídeo">
+      <button id="som" class="som" type="button" aria-pressed="false" aria-label="Ligar o som do vídeo">
         <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="m22 9-6 6M16 9l6 6"/></svg>
         <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
         <span class="t">Som</span>
       </button>
     </div>
     <div class="leg rot">Terraço do Rio California · BH</div>
+  </section>
+
+  <!-- 5b · de perto -->
+  <section id="perto">
+    <h2 class="it tit" data-linhas><span class="ln"><span>De perto.</span></span></h2>
+    <div class="trilho">
+      <figure class="clip">
+        <div class="tela"><video src="video/perto-caique.mp4" poster="img/perto-caique.jpg" muted playsinline loop preload="none" aria-label="Caíque cantando e tocando guitarra, com o João na bateria"></video>
+        <button class="som" type="button" aria-pressed="false" aria-label="Ligar o som do vídeo">
+          <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="m22 9-6 6M16 9l6 6"/></svg>
+          <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+          <span class="t">Som</span>
+        </button></div>
+        <figcaption class="rot"><span class="n">01</span><span>Voz e guitarra</span></figcaption>
+      </figure>
+      <figure class="clip">
+        <div class="tela"><video src="video/perto-joao.mp4" poster="img/perto-joao.jpg" muted playsinline loop preload="none" aria-label="João na bateria e Caíque cantando com o público"></video>
+        <button class="som" type="button" aria-pressed="false" aria-label="Ligar o som do vídeo">
+          <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="m22 9-6 6M16 9l6 6"/></svg>
+          <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+          <span class="t">Som</span>
+        </button></div>
+        <figcaption class="rot"><span class="n">02</span><span>Bateria</span></figcaption>
+      </figure>
+      <figure class="clip">
+        <div class="tela"><video src="video/perto-banda.mp4" poster="img/perto-banda.jpg" muted playsinline loop preload="none" aria-label="Caíque e João tocando juntos"></video>
+        <button class="som" type="button" aria-pressed="false" aria-label="Ligar o som do vídeo">
+          <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="m22 9-6 6M16 9l6 6"/></svg>
+          <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+          <span class="t">Som</span>
+        </button></div>
+        <figcaption class="rot"><span class="n">03</span><span>A banda</span></figcaption>
+      </figure>
+    </div>
   </section>
 
   <!-- 6 · autoral -->
@@ -657,11 +708,32 @@ function aoVivo(){
   gsap.from('#janela', { clipPath: 'inset(100% 0 0 0)', duration: 1.3, ease: 'expo.inOut', scrollTrigger: { trigger: sec, start: 'top 55%', once: true } });
   const v = sec.querySelector('video'), som = document.getElementById('som');
   ScrollTrigger.create({ trigger: sec, start: 'top bottom', end: 'bottom top', onToggle: s => s.isActive ? v.play().catch(() => {}) : v.pause() });
-  som.addEventListener('click', () => {
+  ligaSom(v, som);
+}
+
+
+/* ---------- som: um vídeo com som por vez ---------- */
+const comSom = [];
+function ligaSom(v, bt){
+  comSom.push([v, bt]);
+  bt.addEventListener('click', () => {
     const ligar = v.muted;
-    v.muted = !ligar; som.setAttribute('aria-pressed', ligar); som.setAttribute('aria-label', ligar ? 'Desligar o som do vídeo' : 'Ligar o som do vídeo');
+    comSom.forEach(([o, b]) => { if(o !== v){ o.muted = true; b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', 'Ligar o som do vídeo'); } });
+    v.muted = !ligar; bt.setAttribute('aria-pressed', ligar); bt.setAttribute('aria-label', ligar ? 'Desligar o som do vídeo' : 'Ligar o som do vídeo');
     if(ligar){ v.volume = 1; v.play().catch(() => {}); }
   });
+}
+
+/* ---------- 5b · de perto: cada vídeo toca quando aparece e pausa quando sai ---------- */
+function dePerto(){
+  const clips = [...document.querySelectorAll('#perto .clip')];
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target.querySelector('video');
+    if(e.isIntersecting && e.intersectionRatio > .55){ if(v.preload === 'none') v.preload = 'auto'; v.play().catch(() => {}); }
+    else { v.pause(); }
+  }), { threshold: [0, .55, 1] });
+  clips.forEach(c => { io.observe(c); ligaSom(c.querySelector('video'), c.querySelector('.som')); });
+  gsap.from(clips, { y: 60, opacity: 0, duration: 1.2, ease: 'expo.out', stagger: .12, scrollTrigger: { trigger: '#perto .trilho', start: 'top 85%', once: true } });
 }
 
 /* ---------- 6 · autoral: o disco sai da capa ---------- */
@@ -769,7 +841,7 @@ const loadImg = src => new Promise((res, rej) => { const i = new Image(); i.onlo
   }
   linhas(); textos();
   montaFotoBanda(); show(); repertorio();
-  passagem('passa1'); aoVivo(); disco(); passagem('passa2'); contrate();
+  passagem('passa1'); aoVivo(); dePerto(); disco(); passagem('passa2'); contrate();
   ScrollTrigger.addEventListener('refreshInit', () => ajustes.forEach(f => f()));
   ScrollTrigger.refresh();
 })();
